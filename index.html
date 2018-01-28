@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Rock, Paper, Scissors</title>
+</head>
+<body>
+	<script>
+
+		/*
+		A function that randomly returns the 'computer's' Rock Paper Scissors play.
+		*/
+
+		function computerPlay() {
+			return (Math.floor(Math.random() * (3 - 1)) + 1 === 2) ? "rock" :
+			(Math.floor(Math.random() * (3 - 1)) + 1 === 1) ? "paper" :
+			"scissors";
+		}
+
+		const computerSelection = computerPlay();
+
+		/*
+		A function that plays a single round of Rock Paper Scissors.
+		*/
+
+		const playerSelection = prompt("Let\'s play a game! What do you choose? Rock, Paper, or Scissors?","").toLowerCase();
+
+		function playRound(playerSelection, computerSelection) {
+			let winnerMessage = "You win," + playerSelection + " beats " + computerSelection + "!";
+			let loserMessage = "You lose, " + playerSelection + " loses to " + computerSelection + ".";
+			let tieMessage = "It\'s a tie! Try again."
+
+			return (playerSelection == "rock" && computerSelection == "scissors") ? winnerMessage :
+			 (playerSelection == "paper" && computerSelection == "rock") ? winnerMessage :
+			 (playerSelection == "scissors" && computerSelection == "paper") ? winnerMessage :
+			 (playerSelection == "paper" && computerSelection == "scissors") ? loserMessage :
+			 (playerSelection == "scissors" && computerSelection == "rock") ? loserMessage :
+			 (playerSelection == "rock" && computerSelection == "paper") ? loserMessage :
+			 (playerSelection == "rock" && computerSelection == "rock") ? tieMessage :
+			 (playerSelection == "paper" && computerSelection == "paper") ? tieMessage :
+			 (playerSelection == "scissors" && computerSelection == "scissors") ? tieMessage :
+			 "Input not recognized. Please enter rock, paper, or scissors."
+		}
+
+		/*
+		Write a NEW function called game(). Use the previous function inside of this one to play a 5 round game that keeps score and reports a winner or loser at the end.
+		
+		1. At this point you should still just be using console.log() to display the results of each round and the winner at the end.
+
+		2. Use prompt() to get input from the user.
+
+		3. Feel free to re-work your previous functions if you need to. Specifically, you might want to change the return value to something more useful.
+
+		4. Feel free to create more “helper” functions if you think it would be useful.
+		*/
+
+		function game(playerSelection, computerSelection) {
+
+		}
+
+		console.log(game(playerSelection, computerSelection));
+
+	</script>
+</body>
+</html>
