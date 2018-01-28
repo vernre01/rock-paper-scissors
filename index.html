@@ -25,39 +25,60 @@
 		const playerSelection = prompt("Let\'s play a game! What do you choose? Rock, Paper, or Scissors?","").toLowerCase();
 
 		function playRound(playerSelection, computerSelection) {
-			let winnerMessage = "You win," + playerSelection + " beats " + computerSelection + "!";
-			let loserMessage = "You lose, " + playerSelection + " loses to " + computerSelection + ".";
-			let tieMessage = "It\'s a tie! Try again."
-
-			return (playerSelection == "rock" && computerSelection == "scissors") ? winnerMessage :
-			 (playerSelection == "paper" && computerSelection == "rock") ? winnerMessage :
-			 (playerSelection == "scissors" && computerSelection == "paper") ? winnerMessage :
-			 (playerSelection == "paper" && computerSelection == "scissors") ? loserMessage :
-			 (playerSelection == "scissors" && computerSelection == "rock") ? loserMessage :
-			 (playerSelection == "rock" && computerSelection == "paper") ? loserMessage :
-			 (playerSelection == "rock" && computerSelection == "rock") ? tieMessage :
-			 (playerSelection == "paper" && computerSelection == "paper") ? tieMessage :
-			 (playerSelection == "scissors" && computerSelection == "scissors") ? tieMessage :
+			return (playerSelection == "rock" && computerSelection == "scissors") || 
+				(playerSelection == "paper" && computerSelection == "rock") || 
+				(playerSelection == "scissors" && computerSelection == "paper") ? "won" :
+			 (playerSelection == "paper" && computerSelection == "scissors") || 
+			 	(playerSelection == "scissors" && computerSelection == "rock") || 
+			 	(playerSelection == "rock" && computerSelection == "paper") ? "lost" :
+			 (playerSelection == "rock" && computerSelection == "rock") || 
+			 	(playerSelection == "paper" && computerSelection == "paper") || 
+			 	(playerSelection == "scissors" && computerSelection == "scissors") ? "tied" :
 			 "Input not recognized. Please enter rock, paper, or scissors."
 		}
 
-		/*
-		Write a NEW function called game(). Use the previous function inside of this one to play a 5 round game that keeps score and reports a winner or loser at the end.
+		const roundPlayed = playRound(playerSelection, computerSelection);
 		
-		1. At this point you should still just be using console.log() to display the results of each round and the winner at the end.
-
-		2. Use prompt() to get input from the user.
-
-		3. Feel free to re-work your previous functions if you need to. Specifically, you might want to change the return value to something more useful.
-
-		4. Feel free to create more “helper” functions if you think it would be useful.
+		/*
+		A function that plays a 5 round game that keeps score and reports a winner or loser at the end.
 		*/
 
-		function game(playerSelection, computerSelection) {
+		function game(roundPlayed, playerSelection) {
+			
+			let roundsWon = 0;
+			let roundsLost = 0;
+			let roundsTied = 0; 
+			let winnerMessage = "You\'ve won! The score is You: ";
+			let loserMessage = "You\'ve Lost! The score is You: ";
+			let tiedMessage = "You\'ve Tied! The score is You: ";
+			let i = 0;
 
+			while (i < 5) {
+				if (roundPlayed === "won") {
+					roundsWon++;
+					i++;
+					
+					alert(winnerMessage + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied);
+					prompt("Let\'s play another round! What do you choose? Rock, Paper, or Scissors?","").toLowerCase();
+				} else if (roundPlayed === "lost") {
+					roundsLost++;
+					i++;
+					
+					alert(loserMessage + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied);
+					prompt("Let\'s play another round! What do you choose? Rock, Paper, or Scissors?","").toLowerCase();
+				} else if (roundPlayed === "tied") {
+					roundsTied++;
+					i++;
+					
+					alert(tiedMessage + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied);
+					prompt("Let\'s play another round! What do you choose? Rock, Paper, or Scissors?","").toLowerCase();
+				} else {
+					return "Something has gone wrong.";
+				}
+			}
 		}
 
-		console.log(game(playerSelection, computerSelection));
+		console.log(game(roundPlayed, playerSelection));
 
 	</script>
 </body>
