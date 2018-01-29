@@ -6,18 +6,6 @@
 <body>
 	<script>
 
-
-		let roundsPlayed = 0;
-		let roundsWon = 0;
-		let roundsLost = 0;
-		let roundsTied = 0;
-		let result;
-		let roundResult;
-		let playerSelection;
-		let computerSelection;
-		
-
-
 		//A function that plays a single round of Rock Paper Scissors.
 		function userInputOne() {
 			return prompt("Please enter Rock, Paper, or Scissors","").toLowerCase();
@@ -30,124 +18,44 @@
 			"scissors";
 		}
 
-		//A function that plays one round of Rock Paper scissors/
+		//A function that plays one round of Rock Paper scissors.
 		function playRound(playerSelection, computerSelection) {
-			return (playerSelection === computerSelection) ? roundResul = "tied" :
-			(playerSelection == "rock" && computerSelection == "scissors") ? roundResul = "won" : 
-			(playerSelection == "paper" && computerSelection == "rock") ? roundResul = "won" :
-			(playerSelection == "scissors" && computerSelection == "paper") ? roundResul = "won" :
-		 	roundResul = "lost";
+			return (playerSelection === computerSelection) ? "tied" :
+			(playerSelection == "rock" && computerSelection == "scissors") ? "won" : 
+			(playerSelection == "paper" && computerSelection == "rock") ? "won" :
+			(playerSelection == "scissors" && computerSelection == "paper") ? ("won") :
+		 	"lost";
 		}
 
-		//A function that adds to the number of rounds play and the score
-		function scoreControl(result, roundResult, roundsPlayed, roundsWon, roundsLost, roundsTied) {
-			//oneRound = playRound(playerSelection, computerSelection);
-
-			if (roundsPlayed > 5) {
-				if (roundResult == "won") {
-					roundsWon++;
-					roundsPlayed++;
-					result = "roundWon";
-
-				} else if (roundResult == "lost") {
-					roundsLost++;
-					roundsPlayed++;
-					result = "roundLost";
-
-				} else if (roundResult == "tied") {
-					roundsTied++;
-					roundsPlayed++;
-					result = "roundTied";
-
-				} else {
-					return "Something has gone wrong.";
-				}
-			}
-
-			else {
-				return (roundsWon > roundsLost && roundsWon > roundsTied) ? result = "playerWon" : 
-					(roundsLost > roundsWon && roundsLost > roundsTied) ? result = "computerWon" : 
-					(roundsTied > roundsLost && roundsTied > roundsWon) || (roundsLost == roundsWon) ? result = "gameTied" : 
-					"Something's gone wrong";
-			}
-		}
-
-		//A function that produces a message based on the result of the round
-		function scoreResult(result, playerSelection, computerSelection, roundsWon, roundsLost, roundsTied) {
-			return (result == "roundWon") ? console.log(playerSelection + " beats " + computerSelection + "\nThe score is You: " + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied) :
-				(result == "roundLost") ? console.log(playerSelection + " loses to " + computerSelection + "\nThe score is You: " + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied) :
-				(result == "roundTied") ? console.log(playerSelection + " ties with " + computerSelection + "\nThe score is You: " + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied) :
-				(result == "gameWon") ? console.log("You've won the game!\n\nYou: " + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied) : 
-				(result == "gameLost") ? console.log("You've lost the game.\n\nYou: " + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied) : 
-				(result == "gameTied") ? console.log("You've tied the game.\n\nYou: " + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied) : 
-				"Something's gone wrong";
-
-		}
-
-		function game(roundsPlayed, playerSelection, computerSelection, result) {
-			playerSelection = userInputOne();
-
-			while (roundsPlayed != 5) {
-				computerSelection = computerPlay();
-				result = playRound(computerSelection, playerSelection);
-				scoreControl(roundsPlayed, roundsWon, roundsLost, roundsTied);
-				scoreResult(result, computerSelection, playerSelection, roundsWon, roundsLost, roundsTied);
-				}
-			}
-		
-		game();
-
-		/*
-		A function that plays a 5 round game that keeps score and reports a winner or loser at the end.
-		*/
-
-		/*function game(playerSelection, computerSelection) {
-			
+		//A function that plays five rounds of Rock Paper Scissors.
+		function game() {
 			let roundsWon = 0;
 			let roundsLost = 0;
-			let roundsTied = 0; 
-			let winnerMessage = "You\'ve won! The score is You: ";
-			let loserMessage = "You\'ve Lost! The score is You: ";
-			let tiedMessage = "You\'ve Tied! The score is You: ";
-			let gameOver = 5;
+			let roundsTied = 0;
 
-			let i = 0;
+			for (i = 0; i < 5; i++) {
+				let round = playRound(userInputOne(), computerPlay())
 
-			while (i <= 5) {
-
-				if (roundPlayed == "won") {
-					roundsWon++;
-					i++;
-					
-				} else if (roundPlayed == "lost") {
-					roundsLost++;
-					i++;
-					
-				} else if (roundPlayed == "tied") {
+				if (round == "tied") {
 					roundsTied++;
-					i++;
+				} else if (round == "won") {
+					roundsWon++;
 
-				} else {
-					return "Something has gone wrong.";
+				} else if (round == "lost") {
+					roundsLost++;
 				}
-				//alert(tiedMessage + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied);
-				if (i < 5) {
-				const roundMessage = prompt("Round " + i + ":\n" + tiedMessage + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied + "\nLet\'s play another round!","").toLowerCase();
-				playRound(roundMessage, computerPlay());
-				} else {
-					return (roundsWon > roundsLost && roundsWon > roundsTied) ? "You've won the game! You: " + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied : 
-					(roundsLost > roundsWon && roundsLost > roundsTied) ? "You've lost the game. You: " + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied : 
-					(roundsTied > roundsLost && roundsTied > roundsWon) || (roundsLost == roundsWon) ? "You've tied the game. You: " + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied : 
-					"Something's gone wrong";
-				}
+				console.log("Player: " + roundsWon + " Computer: " + roundsLost + " Ties: " + roundsTied);
+			}
+			if (roundsWon > roundsLost) {
+				console.log("You win!");
+			} else if (roundsWon < roundsLost) {
+				console.log("You lost.")
+			} else {
+				console.log("The game ended in a tie.")
 			}
 		}
 
-		
-
-  
-
-		console.log(playRound(playerSelection, computerSelection)); */
+		game()
 
 	</script>
 </body>
