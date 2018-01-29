@@ -6,44 +6,102 @@
 <body>
 	<script>
 
-		/*
-		A function that randomly returns the 'computer's' Rock Paper Scissors play.
-		*/
 
+		let roundsPlayed = 0;
+		let roundsWon = 0;
+		let roundsLost = 0;
+		let roundsTied = 0;
+		let result;
+		let roundResult;
+		let playerSelection;
+		let computerSelection;
+		
+
+
+		//A function that plays a single round of Rock Paper Scissors.
+		function userInputOne() {
+			return prompt("Please enter Rock, Paper, or Scissors","").toLowerCase();
+		}
+
+		//A function that randomly returns the 'computer's' Rock Paper Scissors play.
 		function computerPlay() {
-			return (Math.floor(Math.random() * (3 - 1)) + 1 === 2) ? "rock" :
-			(Math.floor(Math.random() * (3 - 1)) + 1 === 1) ? "paper" :
+			return (Math.floor(Math.random() * (3) + 1) == 2) ? "rock" :
+			(Math.floor(Math.random() * (3) + 1) == 1) ? "paper" :
 			"scissors";
 		}
 
-		const computerSelection = computerPlay();
-
-		/*
-		A function that plays a single round of Rock Paper Scissors.
-		*/
-
-		const playerSelection = prompt("Let\'s play a game! What do you choose? Rock, Paper, or Scissors?","").toLowerCase();
-
+		//A function that plays one round of Rock Paper scissors/
 		function playRound(playerSelection, computerSelection) {
-			return (playerSelection == "rock" && computerSelection == "scissors") || 
-				(playerSelection == "paper" && computerSelection == "rock") || 
-				(playerSelection == "scissors" && computerSelection == "paper") ? "won" :
-			 (playerSelection == "paper" && computerSelection == "scissors") || 
-			 	(playerSelection == "scissors" && computerSelection == "rock") || 
-			 	(playerSelection == "rock" && computerSelection == "paper") ? "lost" :
-			 (playerSelection == "rock" && computerSelection == "rock") || 
-			 	(playerSelection == "paper" && computerSelection == "paper") || 
-			 	(playerSelection == "scissors" && computerSelection == "scissors") ? "tied" :
-			 "Input not recognized. Please enter rock, paper, or scissors."
+			return (playerSelection === computerSelection) ? roundResul = "tied" :
+			(playerSelection == "rock" && computerSelection == "scissors") ? roundResul = "won" : 
+			(playerSelection == "paper" && computerSelection == "rock") ? roundResul = "won" :
+			(playerSelection == "scissors" && computerSelection == "paper") ? roundResul = "won" :
+		 	roundResul = "lost";
 		}
 
-		const roundPlayed = playRound(playerSelection, computerSelection);
+		//A function that adds to the number of rounds play and the score
+		function scoreControl(result, roundResult, roundsPlayed, roundsWon, roundsLost, roundsTied) {
+			//oneRound = playRound(playerSelection, computerSelection);
+
+			if (roundsPlayed > 5) {
+				if (roundResult == "won") {
+					roundsWon++;
+					roundsPlayed++;
+					result = "roundWon";
+
+				} else if (roundResult == "lost") {
+					roundsLost++;
+					roundsPlayed++;
+					result = "roundLost";
+
+				} else if (roundResult == "tied") {
+					roundsTied++;
+					roundsPlayed++;
+					result = "roundTied";
+
+				} else {
+					return "Something has gone wrong.";
+				}
+			}
+
+			else {
+				return (roundsWon > roundsLost && roundsWon > roundsTied) ? result = "playerWon" : 
+					(roundsLost > roundsWon && roundsLost > roundsTied) ? result = "computerWon" : 
+					(roundsTied > roundsLost && roundsTied > roundsWon) || (roundsLost == roundsWon) ? result = "gameTied" : 
+					"Something's gone wrong";
+			}
+		}
+
+		//A function that produces a message based on the result of the round
+		function scoreResult(result, playerSelection, computerSelection, roundsWon, roundsLost, roundsTied) {
+			return (result == "roundWon") ? console.log(playerSelection + " beats " + computerSelection + "\nThe score is You: " + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied) :
+				(result == "roundLost") ? console.log(playerSelection + " loses to " + computerSelection + "\nThe score is You: " + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied) :
+				(result == "roundTied") ? console.log(playerSelection + " ties with " + computerSelection + "\nThe score is You: " + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied) :
+				(result == "gameWon") ? console.log("You've won the game!\n\nYou: " + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied) : 
+				(result == "gameLost") ? console.log("You've lost the game.\n\nYou: " + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied) : 
+				(result == "gameTied") ? console.log("You've tied the game.\n\nYou: " + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied) : 
+				"Something's gone wrong";
+
+		}
+
+		function game(roundsPlayed, playerSelection, computerSelection, result) {
+			playerSelection = userInputOne();
+
+			while (roundsPlayed != 5) {
+				computerSelection = computerPlay();
+				result = playRound(computerSelection, playerSelection);
+				scoreControl(roundsPlayed, roundsWon, roundsLost, roundsTied);
+				scoreResult(result, computerSelection, playerSelection, roundsWon, roundsLost, roundsTied);
+				}
+			}
 		
+		game();
+
 		/*
 		A function that plays a 5 round game that keeps score and reports a winner or loser at the end.
 		*/
 
-		function game(roundPlayed, playerSelection) {
+		/*function game(playerSelection, computerSelection) {
 			
 			let roundsWon = 0;
 			let roundsLost = 0;
@@ -51,34 +109,45 @@
 			let winnerMessage = "You\'ve won! The score is You: ";
 			let loserMessage = "You\'ve Lost! The score is You: ";
 			let tiedMessage = "You\'ve Tied! The score is You: ";
+			let gameOver = 5;
+
 			let i = 0;
 
-			while (i < 5) {
-				if (roundPlayed === "won") {
+			while (i <= 5) {
+
+				if (roundPlayed == "won") {
 					roundsWon++;
 					i++;
 					
-					alert(winnerMessage + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied);
-					prompt("Let\'s play another round! What do you choose? Rock, Paper, or Scissors?","").toLowerCase();
-				} else if (roundPlayed === "lost") {
+				} else if (roundPlayed == "lost") {
 					roundsLost++;
 					i++;
 					
-					alert(loserMessage + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied);
-					prompt("Let\'s play another round! What do you choose? Rock, Paper, or Scissors?","").toLowerCase();
-				} else if (roundPlayed === "tied") {
+				} else if (roundPlayed == "tied") {
 					roundsTied++;
 					i++;
-					
-					alert(tiedMessage + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied);
-					prompt("Let\'s play another round! What do you choose? Rock, Paper, or Scissors?","").toLowerCase();
+
 				} else {
 					return "Something has gone wrong.";
+				}
+				//alert(tiedMessage + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied);
+				if (i < 5) {
+				const roundMessage = prompt("Round " + i + ":\n" + tiedMessage + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied + "\nLet\'s play another round!","").toLowerCase();
+				playRound(roundMessage, computerPlay());
+				} else {
+					return (roundsWon > roundsLost && roundsWon > roundsTied) ? "You've won the game! You: " + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied : 
+					(roundsLost > roundsWon && roundsLost > roundsTied) ? "You've lost the game. You: " + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied : 
+					(roundsTied > roundsLost && roundsTied > roundsWon) || (roundsLost == roundsWon) ? "You've tied the game. You: " + roundsWon + ", Computer: " + roundsLost + ", Tied: " + roundsTied : 
+					"Something's gone wrong";
 				}
 			}
 		}
 
-		console.log(game(roundPlayed, playerSelection));
+		
+
+  
+
+		console.log(playRound(playerSelection, computerSelection)); */
 
 	</script>
 </body>
